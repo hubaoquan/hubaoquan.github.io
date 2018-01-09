@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Quincy" />
+
+
+
+<meta name="description" content="状态查看命令git status  
+可以查看当前版本库的状态，可以告诉你哪些文件被修改。如果想查看被修改的文件内容，使用 git diff 命令。    例如：git diff readme.txt要随时掌握工作区的状态，使用git status命令。如果git status告诉你有文件被修改过，用git diff可以查看修改内容。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git教程学习-文件版本控制">
+<meta property="og:url" content="hubaoquan.github.io/2017/01/17/Git/Git教程学习-文件版本控制/index.html">
+<meta property="og:site_name" content="HuBaoquan's Blog">
+<meta property="og:description" content="状态查看命令git status  
+可以查看当前版本库的状态，可以告诉你哪些文件被修改。如果想查看被修改的文件内容，使用 git diff 命令。    例如：git diff readme.txt要随时掌握工作区的状态，使用git status命令。如果git status告诉你有文件被修改过，用git diff可以查看修改内容。">
+<meta property="og:image" content="hubaoquan.github.io/picture/git/learngit.png">
+<meta property="og:image" content="hubaoquan.github.io/picture/git/repository.jpg">
+<meta property="og:updated_time" content="2017-01-23T05:09:37.005Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git教程学习-文件版本控制">
+<meta name="twitter:description" content="状态查看命令git status  
+可以查看当前版本库的状态，可以告诉你哪些文件被修改。如果想查看被修改的文件内容，使用 git diff 命令。    例如：git diff readme.txt要随时掌握工作区的状态，使用git status命令。如果git status告诉你有文件被修改过，用git diff可以查看修改内容。">
+<meta name="twitter:image" content="hubaoquan.github.io/picture/git/learngit.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="HuBaoquan&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Git教程学习-文件版本控制 | HuBaoquan&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Quincy</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">Welcome My Blog</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/categories/">分类</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:hubaoquan1994@gmail.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" href="http://weibo.com/hubaoquan999" title="新浪微博"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/hubaoquan" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 豆瓣" href="https://www.douban.com/people/153000583/" title="豆瓣"></a>
+                            
+                                <a class="fa 简书" href="http://www.jianshu.com/users/2e9b7498b795/timeline" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" href="https://segmentfault.com/u/hubaoquan" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" href="http://blog.csdn.net/hubaoquanu/" title="CSDN"></a>
+                            
+                                <a class="fa 网易云音乐" href="http://music.163.com/#/user/home?id=274019301" title="网易云音乐"></a>
+                            
+                                <a class="fa Facebook" href="https://www.facebook.com/baoquan.hu" title="Facebook"></a>
+                            
+                                <a class="fa Google" href="https://plus.google.com/u/0/111655871090242870101" title="Google"></a>
+                            
+                                <a class="fa QQ" href="http://wpa.qq.com/msgrd?v=3&uin=971281722&site=qq&menu=yes" title="QQ"></a>
+                            
+                                <a class="fa 微信" href="/我的微信:hubaoquan9" title="微信"></a>
+                            
+                                <a class="fa LOFTER" href="http://hubaoquan1994.lofter.com/" title="LOFTER"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python-Numpy/">-Python -Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机组成原理/">-计算机组成原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle/">Oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hbq/">hbq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/别人的思想/">别人的思想</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.google.com">Google</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="/jianli.html">AboutMe</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">认识一个人靠缘分，了解一个人靠耐心，征服一个人靠智慧，和睦相处靠包容。人，相互帮扶才感到温暖；事，共同努力才知道简单；路，有人同行才不觉漫长；友，相互记挂才体味情深。与人为善，不遗余力地成就他人，不知不觉也成就了自己。一己是人，众人是天；谋事在人，成事在天。</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Quincy</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Quincy</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">Welcome My Blog</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/categories/">分类</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:hubaoquan1994@gmail.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" target="_blank" href="http://weibo.com/hubaoquan999" title="新浪微博"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/hubaoquan" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 豆瓣" target="_blank" href="https://www.douban.com/people/153000583/" title="豆瓣"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/users/2e9b7498b795/timeline" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" target="_blank" href="https://segmentfault.com/u/hubaoquan" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="http://blog.csdn.net/hubaoquanu/" title="CSDN"></a>
+                            
+                                <a class="fa 网易云音乐" target="_blank" href="http://music.163.com/#/user/home?id=274019301" title="网易云音乐"></a>
+                            
+                                <a class="fa Facebook" target="_blank" href="https://www.facebook.com/baoquan.hu" title="Facebook"></a>
+                            
+                                <a class="fa Google" target="_blank" href="https://plus.google.com/u/0/111655871090242870101" title="Google"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=971281722&site=qq&menu=yes" title="QQ"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="/我的微信:hubaoquan9" title="微信"></a>
+                            
+                                <a class="fa LOFTER" target="_blank" href="http://hubaoquan1994.lofter.com/" title="LOFTER"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Git/Git教程学习-文件版本控制" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/01/17/Git/Git教程学习-文件版本控制/" class="article-date">
+      <time datetime="2017-01-17T06:12:18.000Z" itemprop="datePublished">2017-01-17</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Git教程学习-文件版本控制
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Git/">Git</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="状态查看命令"><a href="#状态查看命令" class="headerlink" title="状态查看命令"></a>状态查看命令</h2><pre><code>git status  
+</code></pre><p>可以查看当前版本库的状态，可以告诉你哪些文件被修改。<br>如果想查看被修改的文件内容，使用 <code>git diff</code> 命令。<br>    例如：git diff readme.txt<br>要随时掌握工作区的状态，使用git status命令。<br>如果git status告诉你有文件被修改过，用git diff可以查看修改内容。<br><a id="more"></a></p>
+<h2 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h2><p>当然了，在实际工作中，我们脑子里怎么可能记得一个几千行的文件每次都改了什么内容，不然要版本控制系统干什么。版本控制系统肯定有某个命令可以告诉我们历史记录，在Git中，我们用git log命令查看：     </p>
+<pre><code>$ git log
+commit 82ef6f6b7e967f1217b27d812a794327b1e36457
+Author: HuBaoquan &lt;hubaoquan1994@gmail.com&gt;
+Date:   Tue Jan 17 14:25:14 2017 +0800
+Modfiy readme.txt
+commit 73fac6fa094236620b11de5372e8e3fdaf45f6e7
+Author: HuBaoquan &lt;hubaoquan1994@gmail.com&gt;
+Date:   Tue Jan 17 14:19:29 2017 +0800
+Create readme.txt
+</code></pre><p>git log命令可以查看我们以前提交的版本，但是这么多信息，看的人眼花缭乱，可以添加一条参数：<code>--pretty=online</code></p>
+<pre><code>$ git log --pretty=oneline
+82ef6f6b7e967f1217b27d812a794327b1e36457 Modfiy readme.txt
+73fac6fa094236620b11de5372e8e3fdaf45f6e7 Create readme.txt
+</code></pre><p>这里显示的信息，前边是版本号后边是commit时-m 后的信息。</p>
+<p>现在我们如果想找回以前的版本该怎么做呢？<br>首先，Git必须知道当前版本是哪个版本，在Git中，用HEAD表示当前版本，也就是最新的提交82ef6f6b7e967f1217b27d812a794327b1e36457（注意我的提交ID和你的肯定不一样），上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。<br>现在，我们要把当前版本“append GPL”回退到上一个版本“add distributed”，就可以使用git reset命令：</p>
+<pre><code>$ git reset --hard HEAD^
+HEAD is now at ea34578 add distributed
+</code></pre><p>根据提交号恢复：<br>    git reset –hard commit_id  </p>
+<font color="#ff0033" size="3" face="微软雅黑" style="font-weight:bold;font-style:italic;">注意提交号比较长可以不用写完，因为git会自动去找到完整提交号，所以写前几位就行了<br><br>如果找不到提交号，可以用git reflog 命令查看命令历史</font>  
+
+<p><strong>小结</strong></p>
+<p>现在总结一下：</p>
+<p>总之只要知道提交号就可以回到提交之后的版本。</p>
+<p>HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令<code>git reset --hard commit_id</code>。</p>
+<p>穿梭前，用git log可以查看提交历史，以便确定要回退到哪个版本。</p>
+<p>要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。</p>
+<h2 id="工作区和暂存区"><a href="#工作区和暂存区" class="headerlink" title="工作区和暂存区"></a>工作区和暂存区</h2><p>工作区（Working Directory）</p>
+<p>就是你在电脑里能看到的目录，比如我的learngit文件夹就是一个工作区：<br>  <img src="/picture/git/learngit.png" alt=""><br>版本库（Repository）</p>
+<p>工作区有一个隐藏目录.git，这个不算工作区，而是Git的版本库。<br>Git的版本库里存了很多东西，其中最重要的就是称为stage（或者叫index）的暂存区，还有Git为我们自动创建的第一个分支master，以及指向master的一个指针叫HEAD。<br><img src="/picture/git/repository.jpg" alt=""><br>前边讲将文件添加到版本库的时候，实际上是分两步：  </p>
+<ol>
+<li>用<code>git add</code>命令将文件添加进去，实际上就是把修改文件放进暂存区；  </li>
+<li>用<code>git commit</code>命令提交修改，实际上就是把暂存区的内容提交到当前分支</li>
+</ol>
+<p>当执行<code>git commit</code>后，如果工作区的文件没有做任何修改，这时候查看状态是没有可以提交的内容。</p>
+<h2 id="管理修改"><a href="#管理修改" class="headerlink" title="管理修改"></a>管理修改</h2><p>Git之所以比其他版本控制软件优秀的原因是因为git管理的是修改，而不是文件，什么是修改？比如你新增了一行，这就是一个修改，删除了一行，也是一个修改，更改了某些字符，也是一个修改，删了一些又加了一些，也是一个修改，甚至创建一个新文件，也算一个修改。  </p>
+<p>如果你修改了文件但是没有提交，git是不会记录你的修改的。</p>
+<p><font color="#00ff99" size="4" face="微软雅黑" style="font-weight:bold;font-style:italic;">注意：</font><br>如果修改了而没有add到暂存区，提交也是没用的，commit是提交暂存区的文件到版本库。</p>
+<h2 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h2><ol>
+<li>git checkout – file可以丢弃工作区的修改</li>
+</ol>
+<p>命令<code>git checkout -- readme.txt</code>意思就是，把readme.txt文件在工作区的修改全部撤销，这里有两种情况：</p>
+<p>一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；</p>
+<p>一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。</p>
+<p>总之，就是让这个文件回到最近一次git commit或git add时的状态。</p>
+<p>git checkout – file命令中的–很重要，没有–，就变成了“切换到另一个分支”的命令，我们在后面的分支管理中会再次遇到git checkout命令。</p>
+<ol>
+<li>用命令<code>git reset HEAD file</code>可以把暂存区的修改撤销掉（unstage），重新放回工作区： <code>git reset HEAD readme.txt</code></li>
+</ol>
+<p>git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本。</p>
+<p><strong>小结</strong></p>
+<p>场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout – file。</p>
+<p>场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。</p>
+<p>场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。  </p>
+<h2 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h2><p>在Git中，删除也是一个修改操作，我们实战一下，先添加一个新文件test.txt到Git并且提交：</p>
+<pre><code>$ git add test.txt
+$ git commit -m &quot;add test.txt&quot;
+[master 94cdc44] add test.txt
+ 1 file changed, 1 insertion(+)
+ create mode 100644 test.txt
+</code></pre><p>一般情况下，你通常直接在文件管理器中把没用的文件删了，或者用rm命令删了：</p>
+<pre><code>$ rm test.txt
+</code></pre><p>这个时候，Git知道你删除了文件，因此，工作区和版本库就不一致了，git status命令会立刻告诉你哪些文件被删除了：</p>
+<pre><code>$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use &quot;git add/rm &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#   deleted:test.txt
+#
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+</code></pre><p>现在你有两个选择，一是确实要从版本库中删除该文件，那就用命令git rm删掉，并且git commit：</p>
+<pre><code>$ git rm test.txt
+rm &apos;test.txt&apos;
+$ git commit -m &quot;remove test.txt&quot;
+[master d17efd8] remove test.txt
+ 1 file changed, 1 deletion(-)
+ delete mode 100644 test.txt
+</code></pre><p>现在，文件就从版本库中被删除了。</p>
+<p>另一种情况是删错了，因为版本库里还有呢，所以可以很轻松地把误删的文件恢复到最新版本：</p>
+<pre><code>$ git checkout -- test.txt
+</code></pre><p>git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。</p>
+<p>小结</p>
+<p>命令git rm用于删除一个文件。如果一个文件已经被提交到版本库，那么你永远不用担心误删，但是要小心，你只能恢复文件到最新版本，你会丢失最近一次提交后你修改的内容。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/01/17/Git/Git教程学习-文件版本控制/">Git教程学习-文件版本控制</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Quincy</a></p>
+        <p><span>发布时间:</span>2017-01-17, 14:12:18</p>
+        <p><span>最后更新:</span>2017-01-23, 13:09:37</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/01/17/Git/Git教程学习-文件版本控制/" title="Git教程学习-文件版本控制">hubaoquan.github.io/2017/01/17/Git/Git教程学习-文件版本控制/</a>
+            <span class="copy-path" data-clipboard-text="原文: hubaoquan.github.io/2017/01/17/Git/Git教程学习-文件版本控制/　　作者: Quincy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/01/23/Git/Git教程学习-远程仓库/">
+                    Git教程学习-远程仓库
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/01/17/Git/Git教程学习-创建版本库/">
+                    Git教程学习-创建版本库
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#状态查看命令"><span class="toc-number">1.</span> <span class="toc-text">状态查看命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#版本回退"><span class="toc-number">2.</span> <span class="toc-text">版本回退</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工作区和暂存区"><span class="toc-number">3.</span> <span class="toc-text">工作区和暂存区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管理修改"><span class="toc-number">4.</span> <span class="toc-text">管理修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#撤销修改"><span class="toc-number">5.</span> <span class="toc-text">撤销修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除文件"><span class="toc-number">6.</span> <span class="toc-text">删除文件</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Git教程学习-文件版本控制　| HuBaoquan's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2017/01/17/Git/Git教程学习-文件版本控制/" data-title="Git教程学习-文件版本控制" data-url="hubaoquan.github.io/2017/01/17/Git/Git教程学习-文件版本控制/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"null"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/01/23/Git/Git教程学习-远程仓库/" title="上一篇: Git教程学习-远程仓库">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/01/17/Git/Git教程学习-创建版本库/" title="下一篇: Git教程学习-创建版本库">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/12/Android开发实战经典/第一节/">Android开发实战经典/第一节</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/23/Git/Git教程学习-Git服务器搭建/">Git教程学习-搭建Git服务器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/23/Git/Git教程学习-标签管理/">Git教程学习-标签管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/23/Git/Git教程学习-分支管理/">Git教程学习-分支管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/23/Git/Git教程学习-远程仓库/">Git教程学习-远程仓库</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/17/Git/Git教程学习-文件版本控制/">Git教程学习-文件版本控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/17/Git/Git教程学习-创建版本库/">Git教程学习-创建版本库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/26/Android/AndroidStudio的使用/">AndroidStudio的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/26/Notes/文章摘录/">文章摘录</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/25/Java/1Java基础/">Java/1Java基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/25/Android/01Android介绍/">Android简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/17/Java/Java简单复习/">Java简单复习</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/12/Oracle/Oracle数据库-五-SQL基本查询/">Oracle数据库-五-SQL基本查询</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/11/Oracle/Oracle数据库复习/">Oracle数据库复习</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/11/Notes/随笔/">我的随笔</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/29/Others/程序设计大赛成绩表/">程序设计大赛成绩表</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/10/计算机组成原理/计算机组成原理第三章-习题23-28/">计算机组成原理第三章 习题23-28</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/01/Python/NumPy数组/">NumPy数组</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/22/Python/Python输入输出/">Python输入输出</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/22/Python/Python数据结构/">Python数据结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/21/Python/Python字符串/">Python字符串</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 Quincy
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

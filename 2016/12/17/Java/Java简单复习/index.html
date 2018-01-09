@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Quincy" />
+
+
+
+<meta name="description" content="1.JVM 　　Java 虚拟机 Java 虚拟机（Java virtual machine，JVM）是运行 Java 程序必不可少的机制。JVM实现了Java语言最重要的特征：即平台无关性。原理：编译后的 Java 程序指令并不直接在硬件系统的 CPU 上执行，而是由 JVM 执行。JVM屏蔽了与具体平台相关的信息，使Java语言编译程序只需要生成在JVM上运行的目标字节码（.class">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java简单复习">
+<meta property="og:url" content="hubaoquan.github.io/2016/12/17/Java/Java简单复习/index.html">
+<meta property="og:site_name" content="HuBaoquan's Blog">
+<meta property="og:description" content="1.JVM 　　Java 虚拟机 Java 虚拟机（Java virtual machine，JVM）是运行 Java 程序必不可少的机制。JVM实现了Java语言最重要的特征：即平台无关性。原理：编译后的 Java 程序指令并不直接在硬件系统的 CPU 上执行，而是由 JVM 执行。JVM屏蔽了与具体平台相关的信息，使Java语言编译程序只需要生成在JVM上运行的目标字节码（.class">
+<meta property="og:image" content="hubaoquan.github.io/picture/b1.jpg">
+<meta property="og:image" content="hubaoquan.github.io/picture/MediatorPattern.jpg">
+<meta property="og:updated_time" content="2016-12-18T15:39:53.749Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java简单复习">
+<meta name="twitter:description" content="1.JVM 　　Java 虚拟机 Java 虚拟机（Java virtual machine，JVM）是运行 Java 程序必不可少的机制。JVM实现了Java语言最重要的特征：即平台无关性。原理：编译后的 Java 程序指令并不直接在硬件系统的 CPU 上执行，而是由 JVM 执行。JVM屏蔽了与具体平台相关的信息，使Java语言编译程序只需要生成在JVM上运行的目标字节码（.class">
+<meta name="twitter:image" content="hubaoquan.github.io/picture/b1.jpg">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="HuBaoquan&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Java简单复习 | HuBaoquan&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Quincy</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">Welcome My Blog</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/categories/">分类</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:hubaoquan1994@gmail.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" href="http://weibo.com/hubaoquan999" title="新浪微博"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/hubaoquan" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 豆瓣" href="https://www.douban.com/people/153000583/" title="豆瓣"></a>
+                            
+                                <a class="fa 简书" href="http://www.jianshu.com/users/2e9b7498b795/timeline" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" href="https://segmentfault.com/u/hubaoquan" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" href="http://blog.csdn.net/hubaoquanu/" title="CSDN"></a>
+                            
+                                <a class="fa 网易云音乐" href="http://music.163.com/#/user/home?id=274019301" title="网易云音乐"></a>
+                            
+                                <a class="fa Facebook" href="https://www.facebook.com/baoquan.hu" title="Facebook"></a>
+                            
+                                <a class="fa Google" href="https://plus.google.com/u/0/111655871090242870101" title="Google"></a>
+                            
+                                <a class="fa QQ" href="http://wpa.qq.com/msgrd?v=3&uin=971281722&site=qq&menu=yes" title="QQ"></a>
+                            
+                                <a class="fa 微信" href="/我的微信:hubaoquan9" title="微信"></a>
+                            
+                                <a class="fa LOFTER" href="http://hubaoquan1994.lofter.com/" title="LOFTER"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python-Numpy/">-Python -Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机组成原理/">-计算机组成原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle/">Oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hbq/">hbq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/别人的思想/">别人的思想</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.google.com">Google</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="/jianli.html">AboutMe</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">认识一个人靠缘分，了解一个人靠耐心，征服一个人靠智慧，和睦相处靠包容。人，相互帮扶才感到温暖；事，共同努力才知道简单；路，有人同行才不觉漫长；友，相互记挂才体味情深。与人为善，不遗余力地成就他人，不知不觉也成就了自己。一己是人，众人是天；谋事在人，成事在天。</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Quincy</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Quincy</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">Welcome My Blog</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/categories/">分类</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:hubaoquan1994@gmail.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" target="_blank" href="http://weibo.com/hubaoquan999" title="新浪微博"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/hubaoquan" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 豆瓣" target="_blank" href="https://www.douban.com/people/153000583/" title="豆瓣"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/users/2e9b7498b795/timeline" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" target="_blank" href="https://segmentfault.com/u/hubaoquan" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="http://blog.csdn.net/hubaoquanu/" title="CSDN"></a>
+                            
+                                <a class="fa 网易云音乐" target="_blank" href="http://music.163.com/#/user/home?id=274019301" title="网易云音乐"></a>
+                            
+                                <a class="fa Facebook" target="_blank" href="https://www.facebook.com/baoquan.hu" title="Facebook"></a>
+                            
+                                <a class="fa Google" target="_blank" href="https://plus.google.com/u/0/111655871090242870101" title="Google"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=971281722&site=qq&menu=yes" title="QQ"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="/我的微信:hubaoquan9" title="微信"></a>
+                            
+                                <a class="fa LOFTER" target="_blank" href="http://hubaoquan1994.lofter.com/" title="LOFTER"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Java/Java简单复习" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/17/Java/Java简单复习/" class="article-date">
+      <time datetime="2016-12-17T13:29:51.000Z" itemprop="datePublished">2016-12-17</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java简单复习
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <div id="myTime"><object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="160" height="70" id="honehoneclock" align="middle"><param name="allowScriptAccess" value="always"><param name="movie" value="http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_wh.swf"><param name="quality" value="high"><param name="bgcolor" value="#ffffff"><param name="wmode" value="transparent"><embed wmode="transparent" src="http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_wh.swf" quality="high" bgcolor="#ffffff" width="160" height="70" name="honehoneclock" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></object></div>  
+
+<h2 id="1-JVM"><a href="#1-JVM" class="headerlink" title="1.JVM"></a>1.JVM</h2><p> 　　Java 虚拟机 Java 虚拟机（Java virtual machine，JVM）是运行 Java 程序必不可少的机制。JVM实现了Java语言最重要的特征：即平台无关性。原理：编译后的 Java 程序指令并不直接在硬件系统的 CPU 上执行，而是由 JVM 执行。JVM屏蔽了与具体平台相关的信息，使Java语言编译程序只需要生成在JVM上运行的目标字节码（.class）,就可以在多种平台上不加修改地运行。Java 虚拟机在执行字节码时，把字节码解释成具体平台上的机器指令执行。因此实现java平台无关性。它是 Java 程序能在多平台间进行无缝移植的可靠保证，同时也是 Java 程序的安全检验引擎（还进行安全检查）。<br><a id="more"></a><br>　　  JVM 是 编译后的 Java 程序（.class文件）和硬件系统之间的接口 （ 编译后：javac 是收录于 JDK 中的 Java 语言编译器。该工具可以将后缀名为. java 的源文件编译为后缀名为. class 的可以运行于 Java 虚拟机的字节码。）  </p>
+<h2 id="2-Java版本"><a href="#2-Java版本" class="headerlink" title="2.Java版本"></a>2.Java版本</h2><p>　　<strong>Java  ME：</strong>Java ME以往称作J2ME（Java Platform, Micro Edition）是为机顶盒、移动电话和PDA之类嵌入式消费电子设备提供的Java语言平台，包括虚拟机和一系列标准化的Java API。它和Java SE、Java EE一起构成Java技术的三大版本，并且同样是通过JCP（Java Community Process）制订的。<br>　　<strong>Java  SE：</strong>J2SE，标准版的Java平台是一个Java2的平台，为用户提供一个程序开发环境。这个程序开发环境提供了开发与运行Java软件的编译器等开发工具、软件库及Java虚拟机。它也是Java2平台、企业版本和Java网页服务的基础。<br>　　<strong>Java  EE：</strong>Java EE，Java平台企业版（Java Platform Enterprise Edition），是Sun公司为企业级应用推出的标准平台。Java平台共分为三个主要版本Java EE、Java SE和Java ME。<br>Sun公司在1998年发表JDK1.2版本的时候，使用了新名称Java 2 Platform，即“Java2平台”，修改后的JDK称为Java 2 Platform Software Developing Kit，即J2SDK。并分为标准版（Standard Edition，J2SE），企业版（Enterprise Edition，J2EE），微型版（MicroEdition，J2ME）。J2EE便由此诞生。<br>　　2005年6月，JavaOne大会召开，SUN公司公开Java SE 6。此时，Java的各种版本已经更名以取消其中的数字“2”：J2EE更名为Java EE, J2SE更名为Java SE，J2ME更名为Java ME。随着Java技术的发展，J2EE平台得到了迅速的发展，成为Java语言中最活跃的体系之一。现如今，J2EE不仅仅是指一种标准平台，它更多的表达着一种软件架构和设计思想。  </p>
+<h2 id="3-Java标识符命名规则与规范"><a href="#3-Java标识符命名规则与规范" class="headerlink" title="3.Java标识符命名规则与规范"></a>3.Java标识符命名规则与规范</h2><h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a><strong>规则</strong></h3><ol>
+<li>标识符由大小写字母, 下划线, 数字, $符号组成.</li>
+<li>开头可以是大小写字母, 下划线, 和$符号(数字和其他符号不能开头)</li>
+<li>标识符长度没有限制</li>
+<li>标识符不能是关键子和保留字</li>
+</ol>
+<h3 id="规范"><a href="#规范" class="headerlink" title="规范"></a><strong>规范</strong></h3><ol>
+<li>标识符的命名最好能反映出其作用</li>
+<li>java语言对字母的大小写有严格的要求</li>
+<li>所有自定义标识符需全部遵循标识符的命名规范  </li>
+</ol>
+<pre><code>变量
+</code></pre><ol>
+<li>如果是单个单词, 单词全部字母小写. 如:<code>int count</code>;</li>
+<li>如果是由多个单词组成的复合单词, 除第一个单词外,  其后所有单词首字母大写. 如: <code>int sumScore</code>;  </li>
+</ol>
+<pre><code>常量
+</code></pre><ol>
+<li>常量所有单词字母大写, 如果是由多个单词组成, 由下划线连接.如: <code>String PERSON_NAME</code>;  </li>
+</ol>
+<pre><code>方法 
+</code></pre><ol>
+<li>方法命名规范与变量相似, 如 count(); getSum();  </li>
+</ol>
+<pre><code>类
+</code></pre><ol>
+<li>类名的所有单词首字母均大写. 如Person{}  , DataCenter{};  </li>
+</ol>
+<pre><code>包 
+</code></pre><ol>
+<li>用小写的倒置域名来命名. 格式: 前缀 + 项目名 + 模块名 + 层如: org.itfuture.domain.sorts  </li>
+</ol>
+<h2 id="4-Java关键词"><a href="#4-Java关键词" class="headerlink" title="4.Java关键词"></a>4.Java关键词</h2><p></p>
+<p><table log-set-param="table_view" class="table-view log-set-param"><tr><td><b>关键字</b></td><td><b>含义</b></td></tr><tr><td>abstract</td><td>表明类或者成员方法具有抽象属性</td></tr><tr><td>assert</td><td>用来进行程序调试</td></tr><tr><td>boolean</td><td>基本数据类型之一，布尔类型</td></tr><tr><td>break</td><td>提前跳出一个块</td></tr><tr><td>byte</td><td>基本数据类型之一，字节类型</td></tr><tr><td>case</td><td>用在switch语句之中，表示其中的一个分支<br>　　</td></tr><tr><td>catch</td><td>用在异常处理中，用来捕捉异常</td></tr><tr><td>char</td><td>基本数据类型之一，字符类型</td></tr><tr><td>class</td><td>类</td></tr><tr><td>const</td><td>保留关键字，没有具体含义</td></tr><tr><td>continue</td><td>回到一个块的开始处</td></tr><tr><td>default</td><td>默认，例如，用在switch语句中，表明一个默认的分支</td></tr><tr><td>do</td><td>用在do-while循环结构中</td></tr><tr><td>double</td><td>基本数据类型之一，双精度浮点数类型</td></tr><tr><td>else</td><td>用在条件语句中，表明当条件不成立时的分支</td></tr><tr><td>enum</td><td>枚举</td></tr><tr><td>extends</td><td>表明一个类型是另一个类型的子类型，这里常见的类型有类和接口</td></tr><tr><td>final</td><td>用来说明最终属性，表明一个类不能派生出子类，或者成员方法不能被覆盖，或者成员域的值不能被改变</td></tr><tr><td>finally</td><td>用于处理异常情况，用来声明一个基本肯定会被执行到的语句块</td></tr><tr><td>float</td><td>基本数据类型之一，单精度浮点数类型</td></tr><tr><td>for</td><td>一种循环结构的引导词</td></tr><tr><td>goto</td><td>保留关键字，没有具体含义</td></tr><tr><td>if</td><td>条件语句的引导词</td></tr><tr><td>implements</td><td>表明一个类实现了给定的接口</td></tr><tr><td>import</td><td>表明要访问指定的类或包</td></tr><tr><td>instanceof</td><td>用来测试一个对象是否是指定类型的实例对象</td></tr><tr><td>int</td><td>基本数据类型之一，整数类型</td></tr><tr><td>interface</td><td>接口</td></tr><tr><td>long</td><td>基本数据类型之一，长整数类型</td></tr><tr><td>native</td><td>用来声明一个方法是由与计算机相关的语言（如C/C++/FORTRAN语言）实现的</td></tr><tr><td>new</td><td>用来创建新实例对象</td></tr><tr><td colspan="1" rowspan="1">null</td><td colspan="1" rowspan="1">用来标识一个不确定的对象</td></tr><tr><td>package</td><td>包</td></tr><tr><td>private</td><td>一种访问控制方式：私用模式</td></tr><tr><td>protected</td><td>一种访问控制方式：保护模式</td></tr><tr><td>public</td><td>一种访问控制方式：共用模式</td></tr><tr><td>return</td><td>从成员方法中返回数据</td></tr><tr><td>short</td><td>基本数据类型之一,短整数类型</td></tr><tr><td>static</td><td>表明具有静态属性</td></tr><tr><td>strictfp</td><td>用来声明FP_strict（单精度或双精度浮点数）表达式遵循IEEE 754算术规范</td></tr><tr><td>super</td><td>表明当前对象的父类型的引用或者父类型的构造方法</td></tr><tr><td>switch</td><td>分支语句结构的引导词</td></tr><tr><td>synchronized</td><td>表明一段代码需要同步执行</td></tr><tr><td>this</td><td>指向当前实例对象的引用</td></tr><tr><td>throw</td><td>抛出一个异常</td></tr><tr><td>throws</td><td>声明在当前定义的成员方法中所有需要抛出的异常</td></tr><tr><td>transient</td><td>声明不用序列化的成员域</td></tr><tr><td>try</td><td>尝试一个可能抛出异常的程序块</td></tr><tr><td>void</td><td>声明当前成员方法没有返回值</td></tr><tr><td>volatile<br>　　</td><td>表明两个或者多个变量必须同步地发生变化</td></tr><tr><td colspan="1" rowspan="1">while<br>　　</td><td colspan="1" rowspan="1">用在循环结构中 <br>　　</td></tr></table><div class="anchor-list">  </div></p>
+<h2 id="5-数据类型与所占字节"><a href="#5-数据类型与所占字节" class="headerlink" title="5.数据类型与所占字节"></a>5.数据类型与所占字节</h2><p>　　Java基本类型共有八种，基本类型可以分为三类，字符类型char，布尔类型boolean以及数值类型byte、short、int、long、float、double。数值类型又可以分为整数类型byte、short、int、long和浮点数类型float、double。JAVA中的数值类型不存在无符号的，它们的取值范围是固定的，不会随着机器硬件环境或者操作系统的改变而改变。实际上，JAVA中还存在另外一种基本类型void，它也有对应的包装类 java.lang.Void，不过我们无法直接对它们进行操作。8 中类型表示范围如下：  </p>
+<pre><code>byte：8位，最大存储数据量是255，存放的数据范围是-128~127之间。
+short：16位，最大数据存储量是65536，数据范围是-32768~32767之间。
+int：32位，最大数据存储容量是2的32次方减1，数据范围是负的2的31次方到正的2的31次方减1。
+long：64位，最大数据存储容量是2的64次方减1，数据范围为负的2的63次方到正的2的63次方减1。
+float：32位，数据范围在3.4e-45~1.4e38，直接赋值时必须在数字后加上f或F。
+double：64位，数据范围在4.9e-324~1.8e308，赋值时可以加d或D也可以不加。  
+boolean：只有true和false两个取值。
+char：16位，存储Unicode码，用单引号赋值。  
+</code></pre><p><div>表2<div><table><tbody><tr><td valign="top">类型</td><td valign="top">字节</td><td valign="top">表示范围</td><td valign="top">包装类</td></tr><tr><td valign="top">byte(字节型)</td><td valign="top">1</td><td valign="top">-128~127</td><td valign="top">Byte</td></tr><tr><td valign="top">short(短整型)</td><td valign="top">2</td><td valign="top">-32768～32767&nbsp;</td><td valign="top">Short</td></tr><tr><td valign="top">int(整型)</td><td valign="top">4</td><td valign="top">-2147483648～2147483647</td><td valign="top">Integer</td></tr><tr><td valign="top">long(长整型)</td><td valign="top">8</td><td valign="top">-9223372036854775808 ~ 9223372036854775807</td><td valign="top">Long</td></tr><tr><td valign="top">float(浮点型)</td><td valign="top">4</td><td valign="top">-3.4E38～3.4E38</td><td valign="top">Float</td></tr><tr><td valign="top">double(双精度型)</td><td valign="top">8</td><td valign="top">-1.7E308～1.7E308</td><td valign="top">Double</td></tr><tr><td valign="top">char(字符型)</td><td valign="top">2</td><td valign="top">从字符型对应的整型数来划分，其表示范围是0～65535&nbsp;</td><td valign="top">Charater</td></tr><tr><td valign="top">booealn(布尔型)</td><td valign="top">1</td><td valign="top">true或false</td><td valign="top">Boolean</td></tr></tbody></table></div></div></p>
+<h2 id="6-常量和变量的表示"><a href="#6-常量和变量的表示" class="headerlink" title="6.常量和变量的表示"></a>6.常量和变量的表示</h2><h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a><font color="#0066ff" size="5" face="微软雅黑" style="font-weight:bold;font-style:italic;">常量</font></h3><p>　　常量代表程序运行过程中不能改变的值。<br>　　常量在程序运行过程中主要有2个作用：<br>　　　　1. 代表常数，便于程序的修改（例如：圆周率的值）<br>　　　　2. 增强程序的可读性（例如：常量UP、DOWN、LEFT和RIGHT分辨代表上下左右，其数值分别是1、2、3和4）<br>　　常量的语法格式和变量类型，只需要在变量的语法格式前面添加关键字final即可。在Java编码规范中，要求常量名必须大写。<br>　　则常量的语法格式如下：<br>　　　　final 数据类型 常量名称 = 值；<br>　　　　final 数据类型 常量名称1 = 值1， 常量名称2 = 值2，……常量名称n = 值n；<br>　　例如：  </p>
+<pre><code>final double PI = 3.14；  
+final char MALE=‘M’，FEMALE=‘F’；  
+</code></pre><p>在Java语法中，常量也可以首先声明，然后再进行赋值，但是只能赋值一次，示例代码如下：  </p>
+<pre><code>final int UP；  
+UP = 1；
+</code></pre><h3 id="注意："><a href="#注意：" class="headerlink" title="注意："></a><font color="#00ff99" size="5" face="微软雅黑" style="font-weight:bold;">注意：</font></h3><p>　　成员变量会被系统默认初始化，局部变量没这功能，所以必须自己初始化。<br>还要注意静态成员变量也没系统默认初始化，必须在初始化块或者定义时或者构造函数里进行手动初始化。  </p>
+<h2 id="7-类型转换的特殊形式"><a href="#7-类型转换的特殊形式" class="headerlink" title="7.类型转换的特殊形式"></a>7.类型转换的特殊形式</h2><p><a href="http://www.jb51.net/article/85533.htm" target="_blank" rel="external">Java类型转换</a>  </p>
+<h2 id="8-Math类常用方法"><a href="#8-Math类常用方法" class="headerlink" title="8.Math类常用方法"></a>8.Math类常用方法</h2><ol>
+<li>static double <strong>random</strong>() 返回带正号的 double 值，该值大于等于 0.0 且小于 1.0。 </li>
+<li>static long <strong>round</strong>(double a) 返回最接近参数的 long。</li>
+<li>abs 返回绝对值</li>
+</ol>
+<h2 id="9-使用Scanner类注意方式引入的包"><a href="#9-使用Scanner类注意方式引入的包" class="headerlink" title="9.使用Scanner类注意方式引入的包"></a>9.使用Scanner类注意方式引入的包</h2><pre><code>import java.util.Scanner;  
+Scanner scanner = new Scanner(System.in);
+</code></pre><h2 id="10-Break、continue、Return"><a href="#10-Break、continue、Return" class="headerlink" title="10.Break、continue、Return"></a>10.Break、continue、Return</h2><ol>
+<li>break:跳出当前的循环，如果是嵌套只跳出本层</li>
+<li>continue:跳过本次进行下次循环</li>
+<li>return：结束函数</li>
+</ol>
+<h2 id="11-类的结构"><a href="#11-类的结构" class="headerlink" title="11.类的结构"></a>11.类的结构</h2><pre><code>public class className{
+      //全局变量
+   public static void main(String[] args) {
+      //局部变量
+      //函数体
+  }
+  //函数
+  private int fun(){
+    return 1;
+  }
+}
+</code></pre><h2 id="12-对象的创建和初始化"><a href="#12-对象的创建和初始化" class="headerlink" title="12.对象的创建和初始化"></a>12.对象的创建和初始化</h2><pre><code>类名 变量名 = new 类构造函数();
+类名 变量名1；
+变量名1 = new 类构造函数();
+</code></pre><h2 id="13-静态初始化块与非静态初始化块"><a href="#13-静态初始化块与非静态初始化块" class="headerlink" title="13.静态初始化块与非静态初始化块"></a>13.静态初始化块与非静态初始化块</h2><p>　　静态初始化块:使用static定义,当类装载到系统时执行一次.若在静态初始化块中想初始化变量,那仅能初始化类变量,即static修饰的数据成员.<br>　　非静态初始化块:在每个对象生成时都会被执行一次,可以初始化类的实例变量.<br>　　非静态初始化块会在构造函数执行时,且在构造函数主体代码执行之前被运行.<br>括号里的是初始化块，这里面的代码在创建Java对象时执行，而且在构造器之前执行！<br>　　其实初始化块就是构造器的补充，初始化块是不能接收任何参数的，定义的一些所有对象共有的属性、方法等内容时就可以用初始化块了初始化！！<br>　　好处是可以提高初始化块的复用，提高整个应用的可维护性。 </p>
+<pre><code> public class TestInitiateBlock {
+
+ {
+   System.out.println(&quot;In non-static initialization block!&quot;);
+ };
+
+ static {
+    System.out.println(&quot;In static initialization block!&quot;);
+ };
+
+ public TestInitiateBlock() {
+   System.out.println(&quot;In Constructor1!&quot;);
+ }
+
+ public void show() {
+    System.out.println(&quot;In show()!&quot;);
+ }
+
+ public static void main(String[] args) {
+   TestInitiateBlock ti = new TestInitiateBlock();
+   ti.show();
+ }
+}
+
+运行结果:  
+In static initialization block!  
+In non-static initialization block!  
+In Constructor1!  
+In show()!  
+</code></pre><h2 id="14-局部变量使用前，先初始化"><a href="#14-局部变量使用前，先初始化" class="headerlink" title="14.局部变量使用前，先初始化"></a>14.局部变量使用前，先初始化</h2><p>　　局部变量详相当于在学校的学号或者公司的工号，只有去了学校或公司才有。而全局变量相当于你的姓名，在出生时或出生之前就有了。</p>
+<h2 id="15-适配器"><a href="#15-适配器" class="headerlink" title="15.适配器"></a>15.适配器</h2><p>　　Java中的适配器实际就是实现接口的类，只不过这个类中的方法都是空方法，当你需要使用哪个方法时，只需在方法种添加相应过程。</p>
+<h2 id="16-Awt"><a href="#16-Awt" class="headerlink" title="16.Awt"></a>16.Awt</h2><p>　　AWT 是Abstract Window ToolKit (抽象窗口工具包)的缩写，这个工具包提供了一套与本地图形界面进行交互的接口。AWT 中的图形函数与操作系统所提供的图形函数之间有着一一对应的关系，我们把它称为peers。 也就是说，当我们利用 AWT 来构件图形用户界面的时候，我们实际上是在利用操作系统所提供的图形库。由于不同操作系统的图形库所提供的功能是不一样的，在一个平台上存在的功能在另外一个平台上则可能不存在。为了实现Java语言所宣称的”一次编译，到处运行”的概念，AWT 不得不通过牺牲功能来实现其平台无关性，也就是说，AWT 所提供的图形功能是各种通用型操作系统所提供的图形功能的交集。由于AWT 是依靠本地方法来实现其功能的，我们通常把AWT控件称为重量级控件。 </p>
+<h2 id="17-Swing"><a href="#17-Swing" class="headerlink" title="17.Swing"></a>17.Swing</h2><p>　　Swing 是在AWT的基础上构建的一套新的图形界面系统，它提供了AWT 所能够提供的所有功能，并且用纯粹的Java代码对AWT 的功能进行了大幅度的扩充。例如说并不是所有的操作系统都提供了对树形控件的支持， Swing 利用了AWT 中所提供的基本作图方法对树形控件进行模拟。由于 Swing 控件是用100%的Java代码来实现的，因此在一个平台上设计的树形控件可以在其他平台上使用。由于在Swing 中没有使用本地方法来实现图形功能，我们通常把Swing控件称为轻量级控件。<br>　　AWT和Swing之间的基本区别：AWT 是基于本地方法的C/C++程序，其运行速度比较快；Swing是基于AWT 的Java程序，其运行速度比较慢。对于一个嵌入式应用来说，目标平台的硬件资源往往非常有限，而应用程序的运行速度又是项目中至关重要的因素。在这种矛盾的情况下，简单而高效的AWT 当然成了嵌入式Java的第一选择。而在普通的基于PC或者是工作站的标准Java应用中，硬件资源对应用程序所造成的限制往往不是项目中的关键因素，所以在标准版的Java中则提倡使用Swing， 也就是通过牺牲速度来实现应用程序的功能。<br>  通俗的话:<br>　　AWT 是抽象窗口组件工具包，是 java 最早的用于编写图形节目应用程序的开发包。Swing 是为了解决 AWT 存在的问题而新开发的包，它以 AWT 为基础的。</p>
+<h2 id="18-Swing引入的包"><a href="#18-Swing引入的包" class="headerlink" title="18.Swing引入的包"></a>18.Swing引入的包</h2><pre><code>import javax.swing.*;//注意是 javax
+</code></pre><h2 id="19-顶层容器JFrame、jDialog、japplet"><a href="#19-顶层容器JFrame、jDialog、japplet" class="headerlink" title="19.顶层容器JFrame、jDialog、japplet"></a>19.顶层容器JFrame、jDialog、japplet</h2><p>　　<strong>JFrame</strong>:用来设计类似于Windows系统中的窗口形式的应用程序。<br>　　<strong>JDialog</strong>:和JFrame类似，只不过JDialog是用来设计对话框。<br>　　<strong>JApplet</strong>:用来设计可以在嵌入在网页中的Java小程序。   </p>
+<h2 id="20-窗体、容器的默认布局"><a href="#20-窗体、容器的默认布局" class="headerlink" title="20.窗体、容器的默认布局"></a>20.窗体、容器的默认布局</h2><p>   　　Frame是框架，这个是要实现的功能界面的布局，默认管理器“BorderLayout”；<br><img src="/picture/b1.jpg" alt=""><br>　　Panel是面板，这个是要实现的某个功能模块的具体实现，默认管理器“FlowLayout“；<br>　　1. <strong>BorderLayout:</strong>将版面划分成东、西、南、北、中五个区域，将添加的组件按指定位置放置。-java.awt.BorderLayout<br>　　2. <strong>FlowLayout:</strong>组件按从左到右而后从上到下的顺序依次排列，一行不能放完则折到下一行。-java.awt.FlowLayout<br>　　3. <strong>GridLayout:</strong>矩形网格形式对容器的组件进行布置-java.awt.GridLayout<br>　　4. <strong>GridBagLayout:</strong>GridBagLayout以表格形式布置容器内的组件，将每个组件放置在每个单元格内，而一个单元格可以跨越多个单元格合并成一个单元格，即多个单元格可以组合成一个单元格，从而实现组件的自由布局。-java.awt.GridBagLayout<br>　　5. <strong>CardLayout:</strong>以层叠的方式布置组件，如同很多张卡片叠在一起，从而只能看到最上面的那一张卡片。-java.awt.CardLayout<br>　　6. <strong>BoxLayout:</strong>以嵌套式盒子来管里容器的布局，通过将组件放入水平或垂直形盒子以多层嵌套的方式进行布局。-javax.swing.BoxLayout  </p>
+<h2 id="21-Event事件，事件源，事件监听，事件处理"><a href="#21-Event事件，事件源，事件监听，事件处理" class="headerlink" title="21.Event事件，事件源，事件监听，事件处理"></a>21.Event事件，事件源，事件监听，事件处理</h2><p>　　1.event object：事件状态对象，用于listener的相应的方法之中，作为参数，一般存在与listerner的方法之中<br>　　2.event source：具体的事件源，比如说，你点击一个button，那么button就是event source，要想使button对某些事件进行响应，你就需要注册特定的listener。<br>　　3.event listener：对每个明确的事件的发生，都相应地定义一个明确的Java方法。这些方法都集中定义在事件监听者（EventListener）接口中，这个接口要继承 java.util.EventListener。 实现了事件监听者接口中一些或全部方法的类就是事件监听者。<br>　　伴随着事件的发生，相应的状态通常都封装在事件状态对象中，该对象必须继承自java.util.EventObject。事件状态对象作为单参传递给应响应该事件的监听者方法中。发出某种特定事件的事件源的标识是：遵从规定的设计格式为事件监听者定义注册方法，并接受对指定事件监听者接口实例的引用。<br>　　具体的对监听的事件类，当它监听到event object产生的时候，它就调用相应的方法，进行处理。</p>
+<h2 id="22-加监听、常用事件监听"><a href="#22-加监听、常用事件监听" class="headerlink" title="22.加监听、常用事件监听"></a>22.加监听、常用事件监听</h2><pre><code>Button awtButton = new Button();            //import java.awt.Button;
+    JButton swingButton  =new JButton(); 　　//import javax.swing.JButton;
+
+    awtButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // TODO Auto-generated method stub
+
+        }
+    });
+</code></pre><h2 id="23-网络编程相关类"><a href="#23-网络编程相关类" class="headerlink" title="23.网络编程相关类"></a>23.网络编程相关类</h2><p>针对网络通信的不同层次，Java提供的网络功能有四大类：InetAddress 、URLs、Sockets、Datagram<br>1、InetAddress面向的是网络层（IP层），用于标识网络上的硬件资源。<br>2、 URL面向的应用层，通过URL，Java程序可以直接送出或读入网络上的数据。<br>3、 Sockets和Datagram面向的则是传输层。Sockets使用的是TCP协议，这是传统网络程序最常用的方式，可以想象为两个不同的程序通过网络的通信信道进行通信。Datagram则使用UDP协议，是另一种网络传输方式，它把数据的目的地纪录在数据包中，然后直接放在网络上。</p>
+<h2 id="24-设计模式：策略模式"><a href="#24-设计模式：策略模式" class="headerlink" title="24.设计模式：策略模式"></a>24.设计模式：策略模式</h2><pre><code>//抽象折扣类
+
+public interface MemberStrategy {
+/**
+ * 计算图书的价格
+ * @param booksPrice    图书的原价
+ * @return    计算出打折后的价格
+ */
+   public double calcPrice(double booksPrice);
+}
+
+//初级会员折扣类
+
+public class PrimaryMemberStrategy implements MemberStrategy {
+
+@Override
+public double calcPrice(double booksPrice) {
+
+    System.out.println(&quot;对于初级会员的没有折扣&quot;);
+    return booksPrice;
+  }
+}
+
+//中级会员折扣类
+
+public class IntermediateMemberStrategy implements MemberStrategy {
+
+@Override
+public double calcPrice(double booksPrice) {
+
+    System.out.println(&quot;对于中级会员的折扣为10%&quot;);
+    return booksPrice * 0.9;
+ }
+}  
+//高级会员折扣类  
+
+public class AdvancedMemberStrategy implements MemberStrategy {
+@Override
+public double calcPrice(double booksPrice) {
+
+    System.out.println(&quot;对于高级会员的折扣为20%&quot;);
+    return booksPrice * 0.8;
+  }
+ }  
+//价格类(相当于上下文)  
+public class Price {
+   //持有一个具体的策略对象
+    private MemberStrategy strategy;
+/**
+ * 构造函数，传入一个具体的策略对象
+ * @param strategy    具体的策略对象
+ */
+public Price(MemberStrategy strategy){
+    this.strategy = strategy;
+}
+
+/**
+ * 计算图书的价格
+ * @param booksPrice    图书的原价
+ * @return    计算出打折后的价格
+ */
+public double quote(double booksPrice){
+    return this.strategy.calcPrice(booksPrice);
+  }
+}  
+//客户端:  
+
+public class Client {
+public static void main(String[] args) {
+    //选择并创建需要使用的策略对象
+    MemberStrategy strategy = new AdvancedMemberStrategy();
+    //创建环境
+    Price price = new Price(strategy);
+    //计算价格
+    double quote = price.quote(300);
+    System.out.println(&quot;图书的最终价格为：&quot; + quote);
+  }
+ }
+</code></pre><h2 id="25-中介者模式"><a href="#25-中介者模式" class="headerlink" title="25.中介者模式"></a>25.中介者模式</h2><p><img src="/picture/MediatorPattern.jpg" alt="">  </p>
+<pre><code>abstract class AbstractColleague {
+protected int number;
+
+public int getNumber() {
+    return number;
+}
+
+public void setNumber(int number){
+    this.number = number;
+}
+//注意这里的参数不再是同事类，而是一个中介者
+public abstract void setNumber(int number, AbstractMediator am);
+}
+
+class ColleagueA extends AbstractColleague{
+
+public void setNumber(int number, AbstractMediator am) {
+    this.number = number;
+    am.AaffectB();
+ }
+}
+
+class ColleagueB extends AbstractColleague{
+
+@Override
+public void setNumber(int number, AbstractMediator am) {
+    this.number = number;
+    am.BaffectA();
+ }
+}
+
+abstract class AbstractMediator {
+protected AbstractColleague A;
+protected AbstractColleague B;
+
+public AbstractMediator(AbstractColleague a, AbstractColleague b) {
+    A = a;
+    B = b;
+}
+
+public abstract void AaffectB();
+
+public abstract void BaffectA();
+
+}
+class Mediator extends AbstractMediator {
+
+public Mediator(AbstractColleague a, AbstractColleague b) {
+    super(a, b);
+}
+
+//处理A对B的影响
+public void AaffectB() {
+    int number = A.getNumber();
+    B.setNumber(number*100);
+}
+
+//处理B对A的影响
+public void BaffectA() {
+    int number = B.getNumber();
+    A.setNumber(number/100);
+ }
+}
+
+public class Client {
+public static void main(String[] args){
+    AbstractColleague collA = new ColleagueA();
+    AbstractColleague collB = new ColleagueB();
+
+    AbstractMediator am = new Mediator(collA, collB);
+
+    System.out.println(&quot;==========通过设置A影响B==========&quot;);
+    collA.setNumber(1000, am);
+    System.out.println(&quot;collA的number值为：&quot;+collA.getNumber());
+    System.out.println(&quot;collB的number值为A的10倍：&quot;+collB.getNumber());
+
+    System.out.println(&quot;==========通过设置B影响A==========&quot;);
+    collB.setNumber(1000, am);
+    System.out.println(&quot;collB的number值为：&quot;+collB.getNumber());
+    System.out.println(&quot;collA的number值为B的0.1倍：&quot;+collA.getNumber());
+
+ }
+}
+</code></pre><h2 id="26-异常处理"><a href="#26-异常处理" class="headerlink" title="26.异常处理"></a>26.异常处理</h2><p>　　　对于可能出现异常的代码，有两种处理办法：<br>    第一、在方法中用try…catch语句捕获并处理异常，catach语句可以有多个，用来匹配多个异常。例如：  </p>
+<pre><code>public void p(int x){
+ try{
+  ...
+ }catch(Exception e){
+  ...
+ }finally{
+  ...
+ }
+}
+</code></pre><p>第二，对于处理不了的异常或者转型异常，用throws抛出</p>
+<pre><code>public void test1() throws MyException{//抛出产生的异常
+ ...
+ if(....){
+  throw new MyException();//用于产生异常
+  }
+} 
+</code></pre><h2 id="27-数组的使用"><a href="#27-数组的使用" class="headerlink" title="27.数组的使用"></a>27.数组的使用</h2><ol>
+<li>声明一个数组 </li>
+</ol>
+<p>Java代码 </p>
+<pre><code>String[] aArray = new String[5];  
+String[] bArray = {&quot;a&quot;,&quot;b&quot;,&quot;c&quot;, &quot;d&quot;, &quot;e&quot;};  
+String[] cArray = new String[]{&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;,&quot;e&quot;};  
+</code></pre><ol>
+<li>输出一个数组 </li>
+</ol>
+<p>Java代码 </p>
+<pre><code>int[] intArray = { 1, 2, 3, 4, 5 };  
+String intArrayString = Arrays.toString(intArray);  
+
+// print directly will print reference value  
+System.out.println(intArray);  
+// [I@7150bd4d  
+
+System.out.println(intArrayString);  
+// [1, 2, 3, 4, 5]  
+</code></pre><ol>
+<li>从一个数组创建数组列表 </li>
+</ol>
+<p>Java代码 </p>
+<pre><code>String[] stringArray = { &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot; };  
+ArrayList&lt;String&gt; arrayList = new ArrayList&lt;String&gt;(Arrays.asList(stringArray));  
+System.out.println(arrayList);  
+// [a, b, c, d, e]  
+</code></pre><ol>
+<li>检查一个数组是否包含某个值 </li>
+</ol>
+<p>Java代码 </p>
+<pre><code>String[] stringArray = { &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot; };  
+boolean b = Arrays.asList(stringArray).contains(&quot;a&quot;);  
+System.out.println(b);  
+// true  
+</code></pre><ol>
+<li>连接两个数组 </li>
+</ol>
+<p>Java代码 </p>
+<pre><code>int[] intArray = { 1, 2, 3, 4, 5 };  
+int[] intArray2 = { 6, 7, 8, 9, 10 };  
+// Apache Commons Lang library  
+int[] combinedIntArray = ArrayUtils.addAll(intArray, intArray2);  
+</code></pre><ol>
+<li>声明一个内联数组（Array inline） </li>
+</ol>
+<p>Java代码 </p>
+<pre><code>method(new String[]{&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;});  
+</code></pre><ol>
+<li>把提供的数组元素放入一个字符串 </li>
+</ol>
+<p>Java代码 </p>
+<pre><code>// containing the provided list of elements  
+// Apache common lang  
+String j = StringUtils.join(new String[] { &quot;a&quot;, &quot;b&quot;, &quot;c&quot; }, &quot;, &quot;);  
+System.out.println(j);  
+// a, b, c  
+</code></pre><ol>
+<li>将一个数组列表转换为数组 </li>
+</ol>
+<p>Java代码 </p>
+<pre><code>String[] stringArray = { &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot; };  
+ArrayList&lt;String&gt; arrayList = new ArrayList&lt;String&gt;(Arrays.asList(stringArray));  
+String[] stringArr = new String[arrayList.size()];  
+arrayList.toArray(stringArr);  
+for (String s : stringArr)  
+System.out.println(s);  
+</code></pre><ol>
+<li>将一个数组转换为集（set） </li>
+</ol>
+<p>Java代码 </p>
+<pre><code>Set&lt;String&gt; set = new HashSet&lt;String&gt;(Arrays.asList(stringArray));  
+System.out.println(set);  
+//[d, e, b, c, a]  
+</code></pre><ol>
+<li>逆向一个数组 </li>
+</ol>
+<p>Java代码 </p>
+<pre><code>int[] intArray = { 1, 2, 3, 4, 5 };  
+ArrayUtils.reverse(intArray);  
+System.out.println(Arrays.toString(intArray));  
+//[5, 4, 3, 2, 1]  
+</code></pre><ol>
+<li>移除数组中的元素 </li>
+</ol>
+<p>Java代码 </p>
+<pre><code>int[] intArray = { 1, 2, 3, 4, 5 };  
+int[] removed = ArrayUtils.removeElement(intArray, 3);//create a new array  
+System.out.println(Arrays.toString(removed));  
+</code></pre><ol>
+<li>将整数转换为字节数组 </li>
+</ol>
+<p>Java代码 </p>
+<pre><code>byte[] bytes = ByteBuffer.allocate(4).putInt(8).array();  
+
+for (byte t : bytes) {  
+   System.out.format(&quot;0x%x &quot;, t);  
+}  
+</code></pre><h2 id="28-equals与"><a href="#28-equals与" class="headerlink" title="28.equals与=="></a>28.equals与==</h2><p>java中的数据类型，可分为两类：<br>1.基本数据类型，也称原始数据类型。<br>　　byte,short,char,int,long,float,double,boolean<br>　　他们之间的比较，应用双等号（==）,比较的是他们的值。<br>2.复合数据类型(类)<br>　　当他们用（==）进行比较的时候，比较的是他们在内存中的存放地址，所以，除非是同一个new出来的对象，他们的比较后的结果为true，否则比较后结果为false。<br>　　<strong> JAVA当中所有的类都是继承于Object这个基类的，在Object中的基类中定义了一个equals的方法，这个方法的初始行为是比较对象的内存地 址，但在一些类库当中这个方法被覆盖掉了，如String,Integer,Date在这些类当中equals有其自身的实现，而不再是比较类在堆内存中的存放地址了。 </strong><br>　　对于复合数据类型之间进行equals比较，在没有覆写equals方法的情况下，他们之间的比较还是基于他们在内存中的存放位置的地址值的，因为Object的equals方法也是用双等号（==）进行比较的，所以比较后的结果跟双等号（==）的结果相同。</p>
+<h2 id="29-线程"><a href="#29-线程" class="headerlink" title="29.线程"></a>29.线程</h2><p>　　Java多线程实现方式主要有三种：继承Thread类、实现Runnable接口、使用ExecutorService、Callable、Future实现有返回结果的多线程。其中前两种方式线程执行完后都没有返回值，只有最后一种是带返回值的。<br>1、继承Thread类实现多线程<br>继承Thread类的方法尽管被我列为一种多线程实现方式，但Thread本质上也是实现了Runnable接口的一个实例，它代表一个线程的实例，并且，启动线程的唯一方法就是通过Thread类的start()实例方法。start()方法是一个native方法，它将启动一个新线程，并执行run()方法。这种方式实现多线程很简单，通过自己的类直接extend Thread，并复写run()方法，就可以启动新线程并执行自己定义的run()方法。例如： </p>
+<pre><code>public class MyThread extends Thread {
+　　 public void run() {
+　　 System.out.println(&quot;MyThread.run()&quot;);
+　　  }
+   }
+</code></pre><p>2、实现Runnable接口方式实现多线程<br>如果自己的类已经extends另一个类，就无法直接extends Thread，此时，必须实现一个Runnable接口，如下：</p>
+<pre><code>public class MyThread extends OtherClass implements Runnable {
+　　public void run() {
+　　 System.out.println(&quot;MyThread.run()&quot;);
+　　}
+}
+</code></pre><p>为了启动MyThread，需要首先实例化一个Thread，并传入自己的MyThread实例：  </p>
+<pre><code>MyThread myThread = new MyThread();
+Thread thread = new Thread(myThread);
+thread.start();  
+</code></pre><p>事实上，当传入一个Runnable target参数给Thread后，Thread的run()方法就会调用target.run()，参考JDK源代码  </p>
+<pre><code>public void run() {
+　　if (target != null) {
+　　 target.run();
+　　}
+}
+</code></pre><h2 id="30-内部类"><a href="#30-内部类" class="headerlink" title="30.内部类"></a>30.内部类</h2>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/12/17/Java/Java简单复习/">Java简单复习</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Quincy</a></p>
+        <p><span>发布时间:</span>2016-12-17, 21:29:51</p>
+        <p><span>最后更新:</span>2016-12-18, 23:39:53</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/12/17/Java/Java简单复习/" title="Java简单复习">hubaoquan.github.io/2016/12/17/Java/Java简单复习/</a>
+            <span class="copy-path" data-clipboard-text="原文: hubaoquan.github.io/2016/12/17/Java/Java简单复习/　　作者: Quincy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/12/25/Android/01Android介绍/">
+                    Android简介
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/12/12/Oracle/Oracle数据库-五-SQL基本查询/">
+                    Oracle数据库-五-SQL基本查询
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-JVM"><span class="toc-number">1.</span> <span class="toc-text">1.JVM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Java版本"><span class="toc-number">2.</span> <span class="toc-text">2.Java版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Java标识符命名规则与规范"><span class="toc-number">3.</span> <span class="toc-text">3.Java标识符命名规则与规范</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#规则"><span class="toc-number">3.1.</span> <span class="toc-text">规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#规范"><span class="toc-number">3.2.</span> <span class="toc-text">规范</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Java关键词"><span class="toc-number">4.</span> <span class="toc-text">4.Java关键词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-数据类型与所占字节"><span class="toc-number">5.</span> <span class="toc-text">5.数据类型与所占字节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-常量和变量的表示"><span class="toc-number">6.</span> <span class="toc-text">6.常量和变量的表示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常量"><span class="toc-number">6.1.</span> <span class="toc-text">常量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注意："><span class="toc-number">6.2.</span> <span class="toc-text">注意：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-类型转换的特殊形式"><span class="toc-number">7.</span> <span class="toc-text">7.类型转换的特殊形式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-Math类常用方法"><span class="toc-number">8.</span> <span class="toc-text">8.Math类常用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-使用Scanner类注意方式引入的包"><span class="toc-number">9.</span> <span class="toc-text">9.使用Scanner类注意方式引入的包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-Break、continue、Return"><span class="toc-number">10.</span> <span class="toc-text">10.Break、continue、Return</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-类的结构"><span class="toc-number">11.</span> <span class="toc-text">11.类的结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-对象的创建和初始化"><span class="toc-number">12.</span> <span class="toc-text">12.对象的创建和初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-静态初始化块与非静态初始化块"><span class="toc-number">13.</span> <span class="toc-text">13.静态初始化块与非静态初始化块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-局部变量使用前，先初始化"><span class="toc-number">14.</span> <span class="toc-text">14.局部变量使用前，先初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-适配器"><span class="toc-number">15.</span> <span class="toc-text">15.适配器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-Awt"><span class="toc-number">16.</span> <span class="toc-text">16.Awt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-Swing"><span class="toc-number">17.</span> <span class="toc-text">17.Swing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18-Swing引入的包"><span class="toc-number">18.</span> <span class="toc-text">18.Swing引入的包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#19-顶层容器JFrame、jDialog、japplet"><span class="toc-number">19.</span> <span class="toc-text">19.顶层容器JFrame、jDialog、japplet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#20-窗体、容器的默认布局"><span class="toc-number">20.</span> <span class="toc-text">20.窗体、容器的默认布局</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#21-Event事件，事件源，事件监听，事件处理"><span class="toc-number">21.</span> <span class="toc-text">21.Event事件，事件源，事件监听，事件处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#22-加监听、常用事件监听"><span class="toc-number">22.</span> <span class="toc-text">22.加监听、常用事件监听</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#23-网络编程相关类"><span class="toc-number">23.</span> <span class="toc-text">23.网络编程相关类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#24-设计模式：策略模式"><span class="toc-number">24.</span> <span class="toc-text">24.设计模式：策略模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#25-中介者模式"><span class="toc-number">25.</span> <span class="toc-text">25.中介者模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#26-异常处理"><span class="toc-number">26.</span> <span class="toc-text">26.异常处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#27-数组的使用"><span class="toc-number">27.</span> <span class="toc-text">27.数组的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#28-equals与"><span class="toc-number">28.</span> <span class="toc-text">28.equals与==</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#29-线程"><span class="toc-number">29.</span> <span class="toc-text">29.线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#30-内部类"><span class="toc-number">30.</span> <span class="toc-text">30.内部类</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Java简单复习　| HuBaoquan's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/12/17/Java/Java简单复习/" data-title="Java简单复习" data-url="hubaoquan.github.io/2016/12/17/Java/Java简单复习/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"null"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/12/25/Android/01Android介绍/" title="上一篇: Android简介">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/12/12/Oracle/Oracle数据库-五-SQL基本查询/" title="下一篇: Oracle数据库-五-SQL基本查询">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/12/Android开发实战经典/第一节/">Android开发实战经典/第一节</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/23/Git/Git教程学习-Git服务器搭建/">Git教程学习-搭建Git服务器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/23/Git/Git教程学习-标签管理/">Git教程学习-标签管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/23/Git/Git教程学习-分支管理/">Git教程学习-分支管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/23/Git/Git教程学习-远程仓库/">Git教程学习-远程仓库</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/17/Git/Git教程学习-文件版本控制/">Git教程学习-文件版本控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/17/Git/Git教程学习-创建版本库/">Git教程学习-创建版本库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/26/Android/AndroidStudio的使用/">AndroidStudio的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/26/Notes/文章摘录/">文章摘录</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/25/Java/1Java基础/">Java/1Java基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/25/Android/01Android介绍/">Android简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/17/Java/Java简单复习/">Java简单复习</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/12/Oracle/Oracle数据库-五-SQL基本查询/">Oracle数据库-五-SQL基本查询</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/11/Oracle/Oracle数据库复习/">Oracle数据库复习</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/11/Notes/随笔/">我的随笔</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/29/Others/程序设计大赛成绩表/">程序设计大赛成绩表</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/10/计算机组成原理/计算机组成原理第三章-习题23-28/">计算机组成原理第三章 习题23-28</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/01/Python/NumPy数组/">NumPy数组</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/22/Python/Python输入输出/">Python输入输出</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/22/Python/Python数据结构/">Python数据结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/21/Python/Python字符串/">Python字符串</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 Quincy
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
